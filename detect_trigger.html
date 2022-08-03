@@ -1,0 +1,11 @@
+<script>
+    function checkCookie(){
+        var check_apd = document.cookie.indexOf("apd_account");
+        var check_info = document.cookie.indexOf("auth_info");
+        var check_open = document.cookie.indexOf("lopenid");
+        if(check_apd!=-1&&check_info!=-1&&check_open!=-1){
+            alert("do something");
+        }
+    }
+    checkCookie();
+</script>
