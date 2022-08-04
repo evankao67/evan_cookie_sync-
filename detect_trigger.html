@@ -1,11 +1,136 @@
-<script>
-    function checkCookie(){
-        var check_apd = document.cookie.indexOf("apd_account");
-        var check_info = document.cookie.indexOf("auth_info");
-        var check_open = document.cookie.indexOf("lopenid");
-        if(check_apd!=-1&&check_info!=-1&&check_open!=-1){
-            alert("do something");
+<!--
+        <style>
+        .modal-mask {
+            position: fixed;
+            z-index: 9998;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: table;
+            transition: opacity 0.3s ease;
         }
-    }
-    checkCookie();
-</script>
+
+        .modal-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .modal-container {
+            width: 300px;
+            margin: 0px auto;
+            background-color: #fff;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 0px 20px;
+        }
+
+        .modal-header button {
+            background-color: white;
+            border: 0px;
+            height: 20px;
+            font-size: 1.2rem;
+        }
+
+        .modal-header span {
+            font-size: 2rem;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-container img {
+            width: 100%;
+        }
+
+        /*
+       * The following styles are auto-applied to elements with
+       * transition="modal" when their visibility is toggled
+       * by Vue.js.
+       *
+       * You can easily play with the modal transition by editing
+       * these styles.
+       */
+
+        .modal-enter-from,
+        .modal-leave-to {
+            opacity: 0;
+        }
+
+        .modal-enter-active .modal-container,
+        .modal-leave-active .modal-container {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+    </style>
+    -->
+
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const appContainer = document.createElement("div");
+        appContainer.id = "app"
+        document.body.appendChild(appContainer)
+        const css = ".modal-mask {position: fixed;z-index: 9998;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);display: table;transition: opacity 0.3s ease;}.modal-wrapper {display: table-cell;vertical-align: middle;}.modal-container {width: 300px;margin: 0px auto;background-color: #fff;border-radius: 2px;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);transition: all 0.3s ease;display: flex;flex-direction: column;}.modal-header {display: flex;justify-content: space-between;align-items: center;padding: 20px 20px 0px 20px;}.modal-header button {background-color: white;border: 0px;height: 20px;font-size: 1.2rem;}.modal-header span {font-size: 2rem;}.modal-body {padding: 20px;}.modal-container img {width: 100%;}.modal-enter-from, .modal-leave-to {opacity: 0;}.modal-enter-active .modal-container, .modal-leave-active .modal-container {-webkit-transform: scale(1.1);transform: scale(1.1);}"
+        const cssTag = document.createElement("style")
+        cssTag.type = "text/css"
+        cssTag.innerHTML = css
+        document.body.appendChild(cssTag)
+
+        const modalTemplate = `
+        <transition name="modal" v-if="showModal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+                        <div class="modal-header">
+                            <span>SCONAS</span>
+                            <button @click="showModal = false">X</button>
+                        </div>
+                        <div class="modal-body">
+                            <img :src="imgUrl" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+        `
+
+        const app = Vue.createApp({
+            template: modalTemplate,
+            data: function () {
+                return {
+                    showModal: false,
+                    imgUrl: "https://cataas.com/cat"
+                }
+            },
+            mounted() {
+                this.checkCookie();
+            },
+            methods: {
+                checkCookie() {
+                    var check_apd = document.cookie.indexOf("apd_account");
+                    var check_info = document.cookie.indexOf("auth_info");
+                    var check_open = document.cookie.indexOf("lopenid");
+                    if (!(check_apd != -1 && check_info != -1 && check_open != -1)) {
+                        this.showModal = true
+                    }
+                }
+            }
+        });
+
+        app.mount('#app');
+
+    </script>
+</body>
